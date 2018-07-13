@@ -148,7 +148,7 @@ def createMatrix(bookings, stations):
             emptyStations[(rentalZoneID)] = 1
             print(rentalZoneID)
         if(steps % 10000 == 0):
-            print("Steps: " + + str(steps))
+            print("Steps: " ++ str(steps))
     print("done")
 
     # Creating resulting data frame with total column
