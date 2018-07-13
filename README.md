@@ -28,11 +28,11 @@ If you want to start the presented code you have to extract the data in a needed
 Important: You need to have the folder 'Opendata Bahn' within your directory or change the path in the corresponding function calls.
 
 
-# Keras
+## Keras
 Run the hole nn-keras.py file to get the needed results. Done by Moritz.
 
-# MXNet
+## MXNet
 Run the hole nn-mxnet.py file to get the needed results. Done by Philipp.
 
-# Theano
+## Theano
 Run the hole rnn.py file from the 'Theano' folder to get the needed results. Done by Benjamin.
