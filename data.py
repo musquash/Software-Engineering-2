@@ -1,5 +1,5 @@
 """
-Author: Moritz, Benjamin, Philipp
+Author: Philipp
 Version: 1.3
 
 This class provides functions to collect necessary data.
@@ -97,3 +97,64 @@ def loadFilter(year=None, cityFilter=None, number=-1):
             tmp = dataLoader(cityFilter)
         print("Loaded all files. Return now:")
         return tmp
+
+
+def loadStation(path='Opendata Bahn/OPENDATA_RENTAL_ZONE_CALL_A_BIKE.csv'):
+    """This function takes the station data csv file sort them by Frankfurt am Main 
+    and load them into a data frame.
+
+    Keyword Arguments:
+        path {str} --  (default: {'Opendata Bahn/OPENDATA_RENTAL_ZONE_CALL_A_BIKE.csv'})
+
+    Returns:
+        result {pandas data frame} -- Loaded file saved in a pandas data frame.
+    """
+    data = pd.read_csv(path, delimiter=';')
+    result = data[data['CITY'] == 'Frankfurt am Main']
+    return result
+
+
+def createMatrix(bookings, stations):
+    """Method for creating and filling the data frame for further working.
+    The Index is date time and the columns are the station ids. The number
+    within are the total drive in bikes to this station.
+    Last Row will be 'total' which represents the total amount of driven
+    bikes a day (sum of the row)
+
+    Arguments:
+        booking {data frame} -- Loaded booking data in a pandas data frame
+        stations {data frame} -- Loaded station information data in a pandas data frame
+        stationsListFfmTotal.csv -- Save the data frame into this file.
+        stationsListFfmTotal.pkl -- Save the data frame into this file
+    """
+    # creating raw matrix with zeros and needed structure
+    dataIndex = pd.date_range('1/1/2014', periods=1232, freq='D')
+    feature_list = []
+    for station in stations['RENTAL_ZONE_HAL_ID']:
+        feature_list.append(station)
+    dataFrame = pd.DataFrame(0, index=dataIndex, columns=feature_list)
+
+    # Function for fill in data into
+    emptyStations = {}
+    steps = 0
+    for index, row in bookings.iterrows():
+        steps += 1
+        rentalZoneID = int(row['START_RENTAL_ZONE_HAL_ID'])
+        bookingDay = index
+        bookingDay = bookingDay.replace(hour=0, minute=0, second=0)
+        try:
+            dataFrame.at[bookingDay, rentalZoneID] += 1
+        except (KeyError):
+            emptyStations[(rentalZoneID)] = 1
+            print(rentalZoneID)
+        if(steps % 10000 == 0):
+            print("Steps: " + + str(steps))
+    print("done")
+
+    # Creating resulting data frame with total column
+    total = pd.DataFrame(dataFrame.sum(axis=1))
+    total.to_csv('Opendata Bahn/stationsListFfmTotal.csv')
+    total.to_pickle('Opendata Bahn/stationsListFfmTotal.pkl')
+    dataFrame['total'] = pd.DataFrame(total)
+
+    return dataFrame
