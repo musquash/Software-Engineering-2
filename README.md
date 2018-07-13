@@ -29,10 +29,10 @@ Important: You need to have the folder 'Opendata Bahn' within your directory or 
 
 
 ## Keras
-Run the hole nn-keras.py file to get the needed results. Done by Moritz.
+Run the hole nn-keras.py file to get the needed results.
 
 ## MXNet
-Run the hole nn-mxnet.py file to get the needed results. Done by Philipp.
+Run the hole nn-mxnet.py file to get the needed results. 
 
 ## Theano
-Run the hole rnn.py file from the 'Theano' folder to get the needed results. Done by Benjamin.
+Run the hole rnn.py file from the 'Theano' folder to get the needed results.
