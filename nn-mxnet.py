@@ -9,7 +9,7 @@ from sklearn.preprocessing import MinMaxScaler
 import matplotlib.pyplot as plt
 
 # Load needed data
-rawData = data.loadPickle("Opendata Bahn/stationsList.pkl")
+rawData = data.loadPickle("Opendata Bahn/stationsListFfmTotal.pkl")
 rawData.head(1)
 
 dataset = rawData['total'].values
